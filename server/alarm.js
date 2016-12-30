@@ -54,6 +54,11 @@ export default class Alarm {
 			this.state = 'STOP';
 		});
 
+		this.speaker.on('error', function(err){
+			console.error(err);
+			this.state = 'ERROR';
+		});
+
 		this.state = 'READY';
 	}
 
@@ -69,7 +74,7 @@ export default class Alarm {
 	}
 
 	stop() {
-		if (this.state !== 'STOP') {
+		if (this.state !== ('STOP' || 'ERROR')) {
 			this.speaker.close();
 			this.state = 'STOP';
 			console.log(this.state, new Date());
